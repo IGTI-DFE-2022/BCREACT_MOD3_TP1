@@ -1,15 +1,14 @@
 import "./App.css";
 import Button from "@material-ui/core/Button";
 import { fetchDespesas } from "./services/backend.service";
+import AppControls from "./components/AppControls";
 
 function App() {
   fetchDespesas().then((d) => console.log(d));
 
   return (
     <div className="App">
-      <Button variant="contained" color="primary">
-        Primary
-      </Button>
+      <AppControls />
     </div>
   );
 }
