@@ -6,6 +6,8 @@ import {
 import AppControls from "./components/AppControls";
 import DespesasTable from "./components/DespesasTable";
 import { useEffect, useState } from "react";
+import Stats from "./components/Stats";
+import { Box } from "@material-ui/core";
 
 export interface Despesa {
   id: number;
@@ -33,7 +35,7 @@ function App() {
   useEffect(() => {
     fetchAllYearWithExpenses().then((d) => {
       setYears(d);
-      setYear(years[years.length - 1]);
+      // setYear(years[years.length - 1]);
     });
   }, []);
 
@@ -45,13 +47,16 @@ function App() {
 
   return (
     <div className="App">
-      <AppControls
-        years={years}
-        year={year}
-        month={month}
-        onMonthChange={handleMonthChange}
-        onYearChange={handleYearChange}
-      />
+      <Box display="flex" alignItems="center" justifyContent="space-between">
+        <AppControls
+          years={years}
+          year={year}
+          month={month}
+          onMonthChange={handleMonthChange}
+          onYearChange={handleYearChange}
+        />
+        <Stats despesas={despesas} />
+      </Box>
       <DespesasTable rows={despesas} />
     </div>
   );

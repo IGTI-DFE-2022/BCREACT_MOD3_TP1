@@ -10,11 +10,6 @@ interface IAppControlsProps {
 }
 
 export default function AppControls(props: IAppControlsProps) {
-  function currentMonth() {
-    let today = new Date();
-    return today.getMonth() + 1;
-  }
-
   function allMonths() {
     let months = [];
     for (let i = 1; i <= 12; i++) {
@@ -36,9 +31,7 @@ export default function AppControls(props: IAppControlsProps) {
   }
 
   function getLasYear() {
-    return props.years.includes(props.year)
-      ? props.year
-      : props.years[props.years.length - 1];
+    return props.years.includes(props.year) ? props.year : "";
   }
 
   return (
@@ -54,6 +47,7 @@ export default function AppControls(props: IAppControlsProps) {
             id: "input-ano",
           }}
         >
+          <MenuItem value=" "></MenuItem>
           {props.years.map((y) => (
             <MenuItem key={y} value={y}>
               {y}
