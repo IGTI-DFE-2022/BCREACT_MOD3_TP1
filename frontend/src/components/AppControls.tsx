@@ -1,12 +1,15 @@
 import { FormControl, InputLabel, Select, MenuItem } from "@material-ui/core";
-import React from "react";
+import React, { ChangeEvent } from "react";
 
-export default function AppControls() {
-  function currentYear() {
-    let today = new Date();
-    return today.getFullYear();
-  }
+interface IAppControlsProps {
+  onYearChange?: (year: number) => void;
+  onMonthChange?: (month: number) => void;
+  years: number[];
+  year: number;
+  month: number;
+}
 
+export default function AppControls(props: IAppControlsProps) {
   function currentMonth() {
     let today = new Date();
     return today.getMonth() + 1;
@@ -20,21 +23,42 @@ export default function AppControls() {
     return months;
   }
 
+  function handleYearChange(evt: any) {
+    if (props.onYearChange) {
+      props.onYearChange(evt.target.value);
+    }
+  }
+
+  function handleMonthChange(evt: any) {
+    if (props.onMonthChange) {
+      props.onMonthChange(evt.target.value);
+    }
+  }
+
+  function getLasYear() {
+    return props.years.includes(props.year)
+      ? props.year
+      : props.years[props.years.length - 1];
+  }
+
   return (
     <div>
       {/* YEAR */}
       <FormControl>
         <InputLabel htmlFor="input-ano">Ano</InputLabel>
         <Select
-          value={currentYear()}
-          onChange={console.log}
+          value={getLasYear()}
+          onChange={handleYearChange}
           inputProps={{
             name: "ano",
             id: "input-ano",
           }}
         >
-          <MenuItem value={currentYear()}>{currentYear()}</MenuItem>
-          <MenuItem value={30}>Thirty</MenuItem>
+          {props.years.map((y) => (
+            <MenuItem key={y} value={y}>
+              {y}
+            </MenuItem>
+          ))}
         </Select>
       </FormControl>
 
@@ -42,8 +66,8 @@ export default function AppControls() {
       <FormControl>
         <InputLabel htmlFor="input-mes">Mês</InputLabel>
         <Select
-          value={currentMonth()}
-          onChange={console.log}
+          value={props.month}
+          onChange={handleMonthChange}
           inputProps={{
             name: "mes",
             id: "input-mes",
