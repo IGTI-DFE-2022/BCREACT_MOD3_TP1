@@ -5,7 +5,11 @@ const BASE_URL = "http://localhost:3001";
 export function fetchDespesas(year: number, month: number): Promise<Despesa[]> {
   return fetch(
     `${BASE_URL}/despesas?mes=${year}-${month.toString().padStart(2, "0")}`
-  ).then((data) => data.json());
+  )
+    .then((data) => data.json())
+    .then((despesas: Despesa[]) => {
+      return despesas.sort((a, b) => a.dia - b.dia);
+    });
 }
 
 export function fetchAllYearWithExpenses() {
