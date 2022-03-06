@@ -50,7 +50,9 @@ export default function AppControls() {
           }}
         >
           {allMonths().map((i) => (
-            <MenuItem value={i}>{i}</MenuItem>
+            <MenuItem key={i} value={i}>
+              {i}
+            </MenuItem>
           ))}
         </Select>
       </FormControl>
